@@ -11,16 +11,6 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    const TYPE_COURIER = 'courier';
-    const TYPE_CUSTOMER = 'customer';
-    const TYPE_MANAGER = 'manager';
-
-    const TYPES = [
-        self::TYPE_COURIER,
-        self::TYPE_CUSTOMER,
-        self::TYPE_MANAGER
-    ];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -30,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type',
+        'user_type_id'
     ];
 
     /**
@@ -53,26 +43,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user type names
+     * Get the user type model
      * 
-     * @return array
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public static function get_type_names() {
-        return [
-            self::TYPE_COURIER => 'Courier',
-            self::TYPE_CUSTOMER => 'Customer',
-            self::TYPE_MANAGER => 'Manager'
-        ];
-    }
-
-    /**
-     * Get the name of the user type
-     * 
-     * @return string
-     */
-    public function get_type_name() {
-        $type_names = self::get_type_names();
-        return $type_names[$this->type];
+    public function type() {
+        return $this->belongsTo(UserType::class, 'user_type_id', 'id');
     }
 
     /**
