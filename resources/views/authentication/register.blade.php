@@ -7,7 +7,7 @@
         <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-muted text-center mt-2 mb-3">Register</div>
-                <form role="form" action="{{ route('register.submit') }}" method="POST">
+                <form role="form" action="{{ route('register.submit') }}" method="POST" novalidate>
                     @csrf
                     <div class="form-group mb-3">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -16,6 +16,7 @@
                             </div>
                             <input class="form-control" placeholder="Name" type="text" name="name" required>
                         </div>
+                        @include('components.form-feedback', ['field' => 'name'])
                     </div>
                     <div class="form-group mb-3">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -24,6 +25,7 @@
                             </div>
                             <input class="form-control" placeholder="Email" type="email" name="email" required>
                         </div>
+                        @include('components.form-feedback', ['field' => 'email'])
                     </div>
                     <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -38,6 +40,7 @@
                                 @endforeach
                             </select>
                         </div>
+                        @include('components.form-feedback', ['field' => 'register_as'])
                     </div>
                     <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -46,6 +49,7 @@
                             </div>
                             <input class="form-control" placeholder="Password" type="password" name="password" required>
                         </div>
+                        @include('components.form-feedback', ['field' => 'password'])
                     </div>
                     <div class="form-group">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -54,6 +58,7 @@
                             </div>
                             <input class="form-control" placeholder="Password confirmation" type="password" name="password_confirmation" required>
                         </div>
+                        @include('components.form-feedback', ['field' => 'password_confirmation'])
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary my-4">Register</button>

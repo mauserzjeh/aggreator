@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Argon CSS -->
     <link type="text/css" href="/assets/css/argon.min.css" rel="stylesheet">
-
-    <!-- <link rel="stylesheet" href="assets/vendor/animate.css/animate.min.css"> -->
+    <!-- animate CSS  -->
+    <link rel="stylesheet" href="assets/vendor/animate.css/animate.min.css">
     <!-- main CSS  -->
     <link type="text/css" href="/assets/css/main.css" rel="stylesheet">
 </head>
@@ -54,9 +54,13 @@
     <!-- Core -->
     <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script> -->
+    <script src="assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
     <!-- Argon JS -->
     <script src="/assets/js/argon.min.js"></script>
+    <!-- main JS  -->
+    <script src="/assets/js/main.js"></script>
+    @include('components.notification');
 </body>
 
 </html>
