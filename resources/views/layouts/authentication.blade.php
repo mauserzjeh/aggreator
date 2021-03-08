@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
 
+    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Favicon -->
     <link href="/assets/img/brand/favicon.png" rel="icon" type="image/png">
     <!-- Fonts -->
@@ -53,6 +55,8 @@
     </footer>
     <!-- Core -->
     <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/assets/vendor/jquery-validation/additional-methods.min.js"></script>
     <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
@@ -60,6 +64,9 @@
     <script src="/assets/js/argon.min.js"></script>
     <!-- main JS  -->
     <script src="/assets/js/main.js"></script>
+
+    @yield('page-specific-scripts')
+
     @include('components.notification');
 </body>
 

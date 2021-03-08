@@ -7,14 +7,14 @@
         <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-muted text-center mt-2 mb-3">Login</div>
-                <form role="form" action="{{ route('login.submit') }}" method="POST" novalidate>
+                <form role="form" action="{{ route('login.submit') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
                         <div class="input-group input-group-merge input-group-alternative">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Email" type="email" name="email" required>
+                            <input class="form-control" placeholder="Email" type="email" name="email">
                         </div>
                         @include('components.form-feedback', ['field' => 'email'])
                     </div>
@@ -23,7 +23,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                             </div>
-                            <input class="form-control" placeholder="Password" type="password" name="password" required>
+                            <input class="form-control" placeholder="Password" type="password" name="password">
                         </div>
                         @include('components.form-feedback', ['field' => 'password'])
                     </div>
@@ -36,4 +36,24 @@
         </div>
     </div>
 </div>
+@endsection
+@section('page-specific-scripts')
+<script>
+    $(() => {
+        $('form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                }
+            },
+            submitHandler: (form) => {
+                $(form).submit();
+            }
+        })
+    });
+</script>
 @endsection
