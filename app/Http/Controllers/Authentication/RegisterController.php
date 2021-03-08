@@ -17,14 +17,14 @@ class RegisterController extends Controller {
         $input = $request->only([
             'name',
             'email',
-            'type',
+            'register_as',
             'password'
         ]);
         
         User::create([
             'name' => trim($input['name']),
             'email' => $input['email'],
-            'type' => $input['type'],
+            'user_type_id' => $input['register_as'],
             'password' => $input['password']
         ]);
 

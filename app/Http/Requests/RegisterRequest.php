@@ -31,9 +31,9 @@ class RegisterRequest extends FormRequest
                 'email', 
                 'unique:\App\Models\User'
             ],
-            'type' => [
+            'register_as' => [
                 'required',
-                Rule::in(\App\Models\User::TYPES)
+                Rule::in(\App\Models\UserType::TYPES)
             ],
             'password' => [
                 'required',

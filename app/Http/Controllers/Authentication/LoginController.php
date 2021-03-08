@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,13 +22,16 @@ class LoginController extends Controller {
 
         if(Auth::attempt($input)) {
             $user = User::where('email', $input['email'])->first();
-            switch($user->type) {
-                case User::TYPE_COURIER:
-                    return redirect()->route('courier.home');
-                case User::TYPE_CUSTOMER:
-                    return redirect()->route('customer.home');
-                case User::TYPE_MANAGER:
-                    return redirect()->route('manager.home');
+            switch($user->type->id) {
+                case UserType::TYPE_COURIER:
+                    // TODO
+                    return redirect('/');
+                case UserType::TYPE_CUSTOMER:
+                    // TODO
+                    return redirect('/');
+                case UserType::TYPE_MANAGER:
+                    // TODO
+                    return redirect('/');
             }
         }
 
