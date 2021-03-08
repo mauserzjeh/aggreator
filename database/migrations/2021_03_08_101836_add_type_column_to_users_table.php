@@ -15,7 +15,8 @@ class AddTypeColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('type', User::TYPES)->after('id');
+            $table->bigInteger('user_type_id')->after('id')->unsigned();
+            $table->foreign('user_type_id')->references('id')->on('user_types');
         });
     }
 
