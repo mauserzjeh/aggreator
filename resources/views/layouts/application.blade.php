@@ -13,13 +13,8 @@
 
     <div class="main-content">
         @include('components.navbar-top')
-        @yield('content')
+        @include('components.main-content')
     </div>
-    <!-- Footer -->
-    <footer class="py-5" id="footer-main">
-        <div class="container">
-        </div>
-    </footer>
     @include('components.scripts')
 </body>
 

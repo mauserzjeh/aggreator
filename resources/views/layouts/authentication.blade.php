@@ -36,6 +36,11 @@
     <!-- Footer -->
     <footer class="py-5" id="footer-main">
         <div class="container">
+            <div class="row align-items-center justify-content-xl-between">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    © 2021 Aggreator
+                </div>
+            </div>
         </div>
     </footer>
     @include('components.scripts')
