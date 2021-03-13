@@ -35,8 +35,7 @@
                             <select class="form-control" id="register-as" name="register_as">
                                 <option value="" disabled selected>Register as</option>
                                 @foreach(\App\Models\UserType::all() as $type)
-                                <!-- disable other resigtrations than manager, customer for now  -->
-                                <option value="{{ $type->id }}" @if($type->id == \App\Models\UserType::TYPE_CUSTOMER) disabled @endif>{{ $type->name }}</option>
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
                                 @endforeach
                             </select>
                         </div>

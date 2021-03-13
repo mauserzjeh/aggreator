@@ -5,22 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
-
-    <link type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Favicon -->
-    <link href="/assets/img/brand/favicon.png" rel="icon" type="image/png">
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    <!-- Icons -->
-    <link rel="stylesheet" href="/assets/vendor/nucleo/css/nucleo.css" type="text/css">
-    <link rel="stylesheet" href="/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-    <!-- Argon CSS -->
-    <link type="text/css" href="/assets/css/argon.min.css" rel="stylesheet">
-    <!-- animate CSS  -->
-    <link rel="stylesheet" href="assets/vendor/animate.css/animate.min.css">
-    <!-- main CSS  -->
-    <link type="text/css" href="/assets/css/main.css" rel="stylesheet">
+    @include('components.styles')
 </head>
 
 <body class="bg-default">
@@ -53,21 +38,7 @@
         <div class="container">
         </div>
     </footer>
-    <!-- Core -->
-    <script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="/assets/vendor/jquery-validation/additional-methods.min.js"></script>
-    <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
-    <!-- Argon JS -->
-    <script src="/assets/js/argon.min.js"></script>
-    <!-- main JS  -->
-    <script src="/assets/js/main.js"></script>
-
-    @yield('page-specific-scripts')
-
-    @include('components.notification');
+    @include('components.scripts')
 </body>
 
 </html>
