@@ -12,6 +12,12 @@ class LoginController extends Controller {
         return view('authentication.login');
     }
 
+    /**
+     * Log the user in
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request) {
         $input = $request->validate([
             'email' => 'required',
@@ -26,9 +32,15 @@ class LoginController extends Controller {
         return redirect()->route('login');
     }
 
+    /** 
+     * Log the user out
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request) {
         Auth::logout();
-        
+
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

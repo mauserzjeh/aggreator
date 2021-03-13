@@ -4,15 +4,25 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
 
 class RegisterController extends Controller {
 
+    /**
+     * Index
+     * 
+     * @return \Illuminate\View\View
+     */
     public function index() {
         return view('authentication.register');
     }
 
+    /**
+     * Register a new user
+     * 
+     * @param \App\Http\Requests\RegisterRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(RegisterRequest $request) {
         $input = $request->only([
             'name',

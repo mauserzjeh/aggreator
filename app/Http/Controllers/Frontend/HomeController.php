@@ -7,6 +7,11 @@ use App\Models\UserType;
 
 class HomeController extends Controller {
 
+    /**
+     * Index
+     * 
+     * @return \Illuminate\View\View
+     */
     public function index() {
         return view('layouts.application');
     }

@@ -19,6 +19,11 @@ class UserType extends Model
         self::TYPE_MANAGER
     ];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name'
     ];

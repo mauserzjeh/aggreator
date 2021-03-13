@@ -7,6 +7,11 @@ use Illuminate\View\View;
 
 class SidebarComposer {
 
+    /**
+     * Menu items constant
+     * 
+     * @var array
+     */
     const MENU_ITEMS = [
         UserType::TYPE_COURIER => [
             // TODO 
@@ -38,6 +43,12 @@ class SidebarComposer {
         ]
     ];
 
+    /**
+     * Bind data to the view.
+     *
+     * @param  \Illuminate\Viw\View  $view
+     * @return void
+     */
     public function compose(View $view) {
         $menu_items = [];
         $user_type_id = auth()->user()->user_type_id ?? null;
