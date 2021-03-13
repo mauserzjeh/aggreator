@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\UserType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,21 +19,20 @@ class LoginController extends Controller {
         ]);
 
         if(Auth::attempt($input)) {
-            $user = User::where('email', $input['email'])->first();
-            switch($user->type->id) {
-                case UserType::TYPE_COURIER:
-                    // TODO
-                    return redirect('/');
-                case UserType::TYPE_CUSTOMER:
-                    // TODO
-                    return redirect('/');
-                case UserType::TYPE_MANAGER:
-                    // TODO
-                    return redirect('/');
-            }
+            return redirect(route('home'));
         }
 
         $request->session()->flash('error', 'Invalid credentials');
         return redirect()->route('login');
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
