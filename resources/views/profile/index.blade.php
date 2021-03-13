@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('profile.update') }}" method="POST">
+                    <form id="profile-info-form" role="form" action="{{ route('profile.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <h6 class="heading-small text-muted mb-4">User information</h6>
@@ -80,4 +80,40 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('page-specific-scripts')
+<script>
+    $(() => {
+        $('form#profile-info-form').validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                old_password: {
+                    pair: '#input-new-password' 
+                },
+                password: {
+                    minlength: 8,
+                    pair: '#input-old-password'
+                },
+                password_confirmation: {
+                    equalTo: '#input-new-password'
+                }
+            },
+            messages: {
+                old_password: {
+                    pair: 'The password is required'
+                },
+                password: {
+                    pair: 'The old password is also required'
+                },
+            }
+        });
+    });
+</script>
 @endsection

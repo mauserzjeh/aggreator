@@ -7,7 +7,7 @@
         <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-muted text-center mt-2 mb-3">Login</div>
-                <form role="form" action="{{ route('login.submit') }}" method="POST">
+                <form id="login-form" role="form" action="{{ route('login.submit') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -40,7 +40,7 @@
 @section('page-specific-scripts')
 <script>
     $(() => {
-        $('form').validate({
+        $('form#login-form').validate({
             rules: {
                 email: {
                     required: true,
@@ -49,9 +49,6 @@
                 password: {
                     required: true
                 }
-            },
-            submitHandler: (form) => {
-                $(form).submit();
             }
         })
     });

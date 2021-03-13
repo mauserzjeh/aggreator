@@ -7,7 +7,7 @@
         <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
                 <div class="text-muted text-center mt-2 mb-3">Register</div>
-                <form role="form" action="{{ route('register.submit') }}" method="POST">
+                <form id="register-form" role="form" action="{{ route('register.submit') }}" method="POST">
                     @csrf
                     <div class="form-group mb-3">
                         <div class="input-group input-group-merge input-group-alternative">
@@ -73,7 +73,7 @@
 @section('page-specific-scripts')
 <script>
     $(() => {
-        $('form').validate({
+        $('form#register-form').validate({
             rules: {
                 name: {
                     required: true
@@ -92,11 +92,8 @@
                 password_confirmation: {
                     equalTo: '#password'
                 }
-            },
-            submitHandler: (form) => {
-                $(form).submit();
             }
-        })
+        });
     });
 </script>
 @endsection
