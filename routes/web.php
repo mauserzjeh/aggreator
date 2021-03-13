@@ -19,16 +19,16 @@ Route::get('/', function () {
 
 Route::get('/login',        [\App\Http\Controllers\Authentication\LoginController::class,       'index'])   ->name('login');
 Route::post('/login',       [\App\Http\Controllers\Authentication\LoginController::class,       'login'])   ->name('login.submit');
+Route::post('/logout',      [\App\Http\Controllers\Authentication\LoginController::class,       'logout'])  ->name('logout');
 Route::get('/register',     [\App\Http\Controllers\Authentication\RegisterController::class,    'index'])   ->name('register');
 Route::post('/register',    [\App\Http\Controllers\Authentication\RegisterController::class,    'register'])->name('register.submit');
 
-/* SERVICE PROVIDERS */
-Route::group(['prefix' => 'service-providers', 'middleware' => 'auth'], function() {
-    Route::get('/courier/home', [\App\Http\Controllers\Frontend\Courier\HomeController::class, 'index'])->name('courier.home');
-    Route::get('/manager/home', [\App\Http\Controllers\Frontend\Manager\HomeController::class, 'index'])->name('manager.home');
-});
-
-/* CUSTOMERS */
-Route::group(['prefix' => 'customers', 'middleware' => 'auth'], function() {
-    Route::get('/home', [\App\Http\Controllers\Frontend\Customer\HomeController::class, 'index'])->name('customer.home');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home',         [\App\Http\Controllers\Frontend\HomeController::class,              'index'])->name('home');
+    Route::get('/profile',      [\App\Http\Controllers\Frontend\ProfileController::class,           'index'])->name('profile');
+    // Manager routes
+    Route::get('/restaurant-details',   [\App\Http\Controllers\Frontend\RestaurantController::class,    'index'])       ->name('restaurant.details');
+    Route::get('/menu',                 [\App\Http\Controllers\Frontend\MenuController::class,          'index'])       ->name('menu');
+    Route::get('/menu-categories',      [\App\Http\Controllers\Frontend\MenuController::class,          'categories'])  ->name('menu.categories');
+    Route::get('/orders',               [\App\Http\Controllers\Frontend\OrderController::class,         'index'])       ->name('orders');
 });
