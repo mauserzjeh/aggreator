@@ -15,3 +15,14 @@ span.avatar.avatar-sm.rounded-circle {
 span.avatar.avatar-sm.rounded-circle i.fas {
     color: var(--primary);
 }
+
+ul.select2-selection__rendered li.select2-selection__choice, li.select2-selection__choice span.select2-selection__choice__remove {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+}
+
+.is-invalid {
+    border-color: #fb6340
+}
+
