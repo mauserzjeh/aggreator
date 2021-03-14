@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     // Manager routes
     Route::get('/restaurant-details',   [\App\Http\Controllers\Frontend\RestaurantController::class,    'index'])       ->name('restaurant.details');
+    Route::post('/restaurant-details',  [\App\Http\Controllers\Frontend\RestaurantController::class,    'update'])      ->name('restaurant.update');
     Route::get('/menu',                 [\App\Http\Controllers\Frontend\MenuController::class,          'index'])       ->name('menu');
     Route::get('/menu-categories',      [\App\Http\Controllers\Frontend\MenuController::class,          'categories'])  ->name('menu.categories');
     Route::get('/orders',               [\App\Http\Controllers\Frontend\OrderController::class,         'index'])       ->name('orders');
