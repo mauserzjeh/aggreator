@@ -3,8 +3,9 @@
 <script src="/assets/vendor/jquery-validation/jquery.validate.min.js"></script>
 <script src="/assets/vendor/jquery-validation/additional-methods.min.js"></script>
 <script src="/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="/assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="/assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="/assets/vendor/select2/dist/js/select2.full.min.js"></script>
 <!-- Argon JS -->
 <script src="/assets/js/argon.min.js"></script>
 <!-- main JS  -->
