@@ -980,7 +980,7 @@ var Datepicker = (function() {
 
 'use strict';
 
-var noUiSlider = (function() {
+var noUiSliderArgon = (function() {
 
 	// Variables
 
