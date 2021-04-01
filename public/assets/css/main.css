@@ -13,7 +13,7 @@ span.avatar.avatar-sm.rounded-circle {
 }
 
 span.avatar.avatar-sm.rounded-circle i.fas {
-    color: var(--primary);
+    color: var(--default);
 }
 
 ul.select2-selection__rendered li.select2-selection__choice, li.select2-selection__choice span.select2-selection__choice__remove {
@@ -24,5 +24,9 @@ ul.select2-selection__rendered li.select2-selection__choice, li.select2-selectio
 
 .is-invalid {
     border-color: #fb6340
+}
+
+.navbar-top {
+    background-image: linear-gradient(to right, var(--primary) , var(--default))
 }
 
