@@ -4,19 +4,22 @@
 @section('content')
 <div class="container-fluid mt-6">
     <div class="row">
-        <div class="col-xl-8 order-xl-1">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col-8">
-                            <h3 class="mb-0">Edit restaurant details </h3>
+        <div class="col-xl-6 order-xl-0">
+            <form id="restaurant-info-form" role="form" action="{{ route('restaurant.update') }}" method="POST">
+                @csrf
+                <input type="hidden" value="{{ $restaurant_data->id ?? 0 }}" name="restaurant_id">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col-8">
+                                <h3 class="mb-0">Edit restaurant details </h3>
+                            </div>
+                            <div class="col-4 text-right">
+                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <form id="restaurant-info-form" role="form" action="{{ route('restaurant.update') }}" method="POST">
-                        @csrf
-                        <input type="hidden" value="{{ $restaurant_data->id ?? 0 }}" name="restaurant_id">
+                    <div class="card-body">
                         <h6 class="heading-small text-muted mb-4">General information</h6>
                         <div class="pl-lg-4">
                             <div class="row">
@@ -53,7 +56,7 @@
                                         <label class="form-control-label" for="input-style">Style</label>
                                         <select multiple id="input-style" class="form-control" name="restaurant_tags[]">
                                             @forelse($restaurant_tags as $tag)
-                                                <option value="{{ $tag->id }}" @if(in_array($tag->id, $restaurant_data_tags)) selected @endif>{{ $tag->name }}</option>
+                                            <option value="{{ $tag->id }}" @if(in_array($tag->id, $restaurant_data_tags)) selected @endif>{{ $tag->name }}</option>
                                             @empty
                                             @endforelse
                                         </select>
@@ -97,23 +100,48 @@
                                 <textarea rows="4" class="form-control" placeholder="A few words about the restaurant..." name="description">{{ old('description') ?? $restaurant_data->description ?? '' }}</textarea>
                             </div>
                         </div>
-                        <hr class="my-4">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-xl-6 order-x1-1">
+            <form id="restaurant-schedule-form" role="form" action="{{ route('restaurant.update.schedule') }}" method="POST">
+                @csrf
+                <input type="hidden" value="{{ $restaurant_data->id ?? 0 }}" name="restaurant_id">
+                <div class="card">
+                    <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col-8">
+                                <h3 class="mb-0">Edit restaurant schedule </h3>
                             </div>
                             <div class="col-4 text-right">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="card-body">
+                        @foreach($restaurant_data_schedule as $day => $schedule)
+                        <div class="mt-3">
+                            <h6 class="heading-small text-muted mb-0">{{ $weekdays[$day] }}</h6>
+                            @include('components.schedule-slider', [
+                            'slider_id' => $day,
+                            'name_low' => $day . '_b',
+                            'value_low' => $schedule[0],
+                            'name_high' => $day . '_e',
+                            'value_high' => $schedule[1]
+                            ])
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 @endsection
 
 @section('page-specific-scripts')
+<script src="/assets/js/schedule-slider.js"></script>
 <script>
     $(() => {
         $('select#input-style').select2({
@@ -150,6 +178,9 @@
                 }
             }
         });
+
+        
+
     });
 </script>
 @endsection

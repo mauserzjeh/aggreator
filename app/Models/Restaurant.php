@@ -24,4 +24,8 @@ class Restaurant extends Model
     public function tags() {
         return $this->belongsToMany(RestaurantTag::class, 'restaurant_tags_restaurants', 'restaurant_id', 'restaurant_tag_id');
     }
+
+    public function schedule() {
+        return $this->hasOne(RestaurantSchedule::class);
+    }
 }

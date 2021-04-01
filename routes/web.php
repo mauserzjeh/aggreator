@@ -40,8 +40,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/profile',     [\App\Http\Controllers\Frontend\ProfileController::class,           'update'])  ->name('profile.update');
 
     // Manager routes
-    Route::get('/restaurant-details',   [\App\Http\Controllers\Frontend\RestaurantController::class,    'index'])       ->name('restaurant.details');
-    Route::post('/restaurant-details',  [\App\Http\Controllers\Frontend\RestaurantController::class,    'update'])      ->name('restaurant.update');
+    Route::get('/restaurant-details',           [\App\Http\Controllers\Frontend\RestaurantController::class,    'index'])           ->name('restaurant.details');
+    Route::post('/restaurant-details',          [\App\Http\Controllers\Frontend\RestaurantController::class,    'update'])          ->name('restaurant.update');
+    Route::post('/restaurant-details/schedule', [\App\Http\Controllers\Frontend\RestaurantController::class,    'update_schedule']) ->name('restaurant.update.schedule');
+    
     Route::get('/menu',                 [\App\Http\Controllers\Frontend\MenuController::class,          'index'])       ->name('menu');
     Route::get('/menu-categories',      [\App\Http\Controllers\Frontend\MenuController::class,          'categories'])  ->name('menu.categories');
     Route::get('/orders',               [\App\Http\Controllers\Frontend\OrderController::class,         'index'])       ->name('orders');
