@@ -8,7 +8,7 @@
 <!-- Argon CSS -->
 <link type="text/css" href="/assets/css/argon.min.css" rel="stylesheet">
 <!-- animate CSS  -->
-<link rel="stylesheet" href="assets/vendor/animate.css/animate.min.css">
+<link rel="stylesheet" href="/assets/vendor/animate.css/animate.min.css">
 <!-- select2 CSS -->
 <link type="text/css" href="/assets/vendor/select2/dist/css/select2.min.css" rel="stylesheet">
 <!-- main CSS  -->

@@ -5,7 +5,7 @@
             <!-- Brand -->
             <div class="sidenav-header  align-items-center">
                 <a class="navbar-brand" href="javascript:void(0)">
-                    <img src="assets/img/brand/aggreator_primary-01.png" class="navbar-brand-img" alt="aggreator_logo">
+                    <img src="/assets/img/brand/aggreator_primary-01.png" class="navbar-brand-img" alt="aggreator_logo">
                 </a>
             </div>
             <div class="navbar-inner">
