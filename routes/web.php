@@ -44,7 +44,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/restaurant-details',          [\App\Http\Controllers\Frontend\RestaurantController::class,    'update'])          ->name('restaurant.update');
     Route::post('/restaurant-details/schedule', [\App\Http\Controllers\Frontend\RestaurantController::class,    'update_schedule']) ->name('restaurant.update.schedule');
     
-    Route::get('/menu',                 [\App\Http\Controllers\Frontend\MenuController::class,          'index'])       ->name('menu');
-    Route::get('/menu-categories',      [\App\Http\Controllers\Frontend\MenuController::class,          'categories'])  ->name('menu.categories');
+    Route::get('/menu',                                 [\App\Http\Controllers\Frontend\MenuController::class,          'index'])           ->name('menu');
+    Route::get('/menu-categories',                      [\App\Http\Controllers\Frontend\MenuController::class,          'categories'])      ->name('menu.categories');
+    Route::get('/menu-categories/edit/{categoryId}',    [\App\Http\Controllers\Frontend\MenuController::class,          'edit_category'])   ->name('menu.categories.edit');
+    Route::post('/menu-categories/edit/{categoryId}',   [\App\Http\Controllers\Frontend\MenuController::class,          'save_category'])   ->name('menu.categories.save');
+    Route::get('/menu-categories/delete/{categoryId}',  [\App\Http\Controllers\Frontend\MenuController::class,          'delete_category']) ->name('menu.categories.delete');
+
     Route::get('/orders',               [\App\Http\Controllers\Frontend\OrderController::class,         'index'])       ->name('orders');
 });
