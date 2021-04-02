@@ -24,5 +24,11 @@ $(() => {
         }
         return true;
     });
+
+    $('button.delete-button').on('click', function() {
+        if($('#delete-modal').length) {
+            $('#delete-submit-button').attr('href', $(this).data('href'))
+        }
+    });
 });
 

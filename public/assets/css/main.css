@@ -30,3 +30,9 @@ ul.select2-selection__rendered li.select2-selection__choice, li.select2-selectio
     background-image: linear-gradient(to right, var(--primary) , var(--default))
 }
 
+nav.nav-pagination {
+    display: flex;
+    justify-content: center;
+}
+
+
