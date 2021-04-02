@@ -9,5 +9,7 @@ class MenuCategory extends Model
 {
     use HasFactory;
 
-    
+    public function items() {
+        return $this->hasMany(MenuItem::class, 'menu_category_id', 'id');
+    }
 }

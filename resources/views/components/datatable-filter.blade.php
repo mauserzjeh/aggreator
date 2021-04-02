@@ -12,7 +12,16 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="form-control-label" for="filter-{{ $input['id'] }}">{{ $input['label'] }}</label>
+                                        @if(isset($input['type']) && $input['type'] == 'select')
+                                        <select class="form-control form-control-sm" id="filter-{{ $input['id'] }}" name="filter-{{ $input['id'] }}">
+                                            <option value="">Select...</option>
+                                            @foreach($input['options'] as $key => $value)
+                                                <option value="{{ $key }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                        @else
                                         <input class="form-control form-control-sm" type="{{ $input['type'] ?? 'text' }}" id="filter-{{ $input['id'] }}" placeholder="{{ $input['placeholder'] ?? '' }}" value="{{ $input['value'] ?? '' }}" name="filter-{{ $input['id'] }}">
+                                        @endif  
                                     </div>
                                 </div>
                             @endforeach
