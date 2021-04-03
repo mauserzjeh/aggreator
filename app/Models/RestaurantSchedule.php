@@ -75,4 +75,15 @@ class RestaurantSchedule extends Model
             }
         }
     }
+
+    public function set_default_schedule() {
+        $default_schedule = ScheduleHelper::DEFAULT_SCHEDULE;
+        foreach($default_schedule as $key => $value) {
+            $prop_b = $key . '_b';
+            $prop_e = $key . '_e';
+
+            $this->$prop_b = $value[0];
+            $this->$prop_e = $value[1];
+        }
+    }
 }

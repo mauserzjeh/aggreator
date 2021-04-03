@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Restaurant;
+use App\Models\RestaurantSchedule;
 use App\Models\User;
+use App\Models\UserType;
 
 class RegisterController extends Controller {
 
@@ -31,12 +34,32 @@ class RegisterController extends Controller {
             'password'
         ]);
         
-        User::create([
+        $user = User::create([
             'name' => trim($input['name']),
             'email' => $input['email'],
             'user_type_id' => $input['register_as'],
             'password' => $input['password']
         ]);
+
+        //If manager registered, then setup a some default stuff
+        if($input['register_as'] == UserType::TYPE_MANAGER) {
+            $restaurant = Restaurant::create([
+                'user_id' => $user->id,
+                'name' => '',
+                'zip_code' => '',
+                'city' => '',
+                'address' => '',
+                'email' => null,
+                'phone' => null,
+                'mobile_phone' => null,
+                'description' => null
+            ]);
+
+            $restaurant_schedule = new RestaurantSchedule();
+            $restaurant_schedule->restaurant_id = $restaurant->id;
+            $restaurant_schedule->set_default_schedule();
+            $restaurant_schedule->save();
+        }
 
         $request->session()->flash('success', 'Registration is successful.');
         return redirect()->route('login');
