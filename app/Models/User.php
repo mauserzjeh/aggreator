@@ -45,10 +45,19 @@ class User extends Authenticatable
     /**
      * Get the user type model
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function type() {
         return $this->belongsTo(UserType::class, 'user_type_id', 'id');
+    }
+
+    /**
+     * Get the restaurant of the user
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function restaurant() {
+        return $this->hasOne(Restaurant::class, 'user_id', 'id');
     }
 
     /**

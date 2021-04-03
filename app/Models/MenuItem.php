@@ -24,4 +24,8 @@ class MenuItem extends Model
     public function category() {
         return $this->belongsTo(MenuCategory::class, 'menu_category_id', 'id');
     }
+
+    public function restaurant() {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
 }

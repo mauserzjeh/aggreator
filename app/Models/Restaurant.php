@@ -28,4 +28,12 @@ class Restaurant extends Model
     public function schedule() {
         return $this->hasOne(RestaurantSchedule::class);
     }
+
+    public function menu_categories() {
+        return $this->hasMany(MenuCategory::class, 'restaurant_id', 'id');
+    }
+
+    public function menu_items() {
+        return $this->hasMany(MenuItem::class, 'restaurant_id', 'id');
+    }
 }

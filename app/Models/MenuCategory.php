@@ -12,4 +12,8 @@ class MenuCategory extends Model
     public function items() {
         return $this->hasMany(MenuItem::class, 'menu_category_id', 'id');
     }
+
+    public function restaurant() {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
+    }
 }
