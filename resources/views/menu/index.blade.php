@@ -31,6 +31,12 @@
                     'options' => $categories
                 ],
                 [
+                    'id' => 'allergenes',
+                    'label' => 'Allergenes',
+                    'type' => 'select',
+                    'options' => $allergenes
+                ],
+                [
                     'id' => 'description',
                     'label' => 'Description'
                 ]
@@ -43,6 +49,7 @@
             'id' => 'ID',
             'name' => 'Name',
             'category' => 'Category',
+            'allergenes' => 'Allergenes',
             'price' => 'Price',
         ],
         'data' => $menu_items,

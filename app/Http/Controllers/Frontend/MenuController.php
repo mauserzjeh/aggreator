@@ -21,6 +21,7 @@ class MenuController extends Controller {
             'filter-id',
             'filter-name',
             'filter-category',
+            'filter-allergenes',
             'filter-description',
         ]);
 
@@ -39,6 +40,11 @@ class MenuController extends Controller {
             if(array_key_exists('filter-category', $filter) && $filter['filter-category']) {
                 $data->where('menu_category_id', $filter['filter-category']);
             }
+            if(array_key_exists('filter-allergenes', $filter) && $filter['filter-allergenes']) {
+                $data->whereHas('allergenes', function($query) use($filter) {
+                    return $query->where('allergenes.id', $filter['filter-allergenes']);
+                });
+            }
             if(array_key_exists('filter-description', $filter) && $filter['filter-description']) {
                 $data->where('description', 'LIKE', '%' . $filter['filter-description'] . '%');
             }
@@ -55,12 +61,15 @@ class MenuController extends Controller {
             $categories = MenuCategory::where('user_id', $user->id)->pluck('name', 'id');
             foreach($menu_items as $item) {
                 $item->category = $categories[$item->menu_category_id] ?? $item->menu_category_id;
+                $item->allergenes = implode(', ', $item->allergenes()->pluck('name')->toArray());
             }
         }
 
+        $allergenes = Allergene::all()->pluck('name', 'id');
         return view('menu.index', [
             'menu_items' => $menu_items,
-            'categories' => $categories
+            'categories' => $categories,
+            'allergenes' => $allergenes
         ]);
     }
 
@@ -110,13 +119,15 @@ class MenuController extends Controller {
         }
 
         $item->user_id = $user->id;
+        $item->restaurant_id = $user->restaurant->id;
         $item->menu_category_id = $input['category'];
         $item->name = $input['name'];
         $item->price = $input['price'];
         $item->description = $input['description'];
         $item->save();
 
-        $item->allergenes()->sync($input['item_allergenes']);
+        $item_allergenes = $input['item_allergenes'] ?? [];
+        $item->allergenes()->sync($item_allergenes);
 
         $request->session()->flash('success', 'Save successful');
         return redirect()->route('menu');
@@ -212,6 +223,7 @@ class MenuController extends Controller {
         }
 
         $category->user_id = $user->id;
+        $category->restaurant_id = $user->restaurant->id;
         $category->name = $input['name'];
         $category->slug = Str::slug($input['name']);
         $category->save();
