@@ -25,6 +25,9 @@
                             @if(array_key_exists('delete', $actions))
                             <button type="button" data-href="{{ route($actions['delete']['route_name'], [$actions['delete']['route_idparam'] => $row->id]) }}" class="btn btn-warning btn-sm delete-button" data-toggle="modal" data-original-title="Delete" title="Delete" data-target="#delete-modal"><i class="fas fa-trash-alt"></i></button>
                             @endif
+                            @if(array_key_exists('info', $actions))
+                            <a href="{{ route($actions['info']['route_name'], [$actions['info']['route_idparam'] => $row->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
+                            @endif
                     </td>
                     @endif
                 </tr>

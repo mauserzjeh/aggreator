@@ -35,4 +35,20 @@ nav.nav-pagination {
     justify-content: center;
 }
 
+td.menu-category {
+    background-color: var(--secondary);
+}
+
+label.custom-toggle.order {
+    width: 65px;
+}
+
+label.custom-toggle.order input:checked+.custom-toggle-slider:before {
+    transform: translateX(40px);
+}
+
+label.custom-toggle.order input:checked+.custom-toggle-slider:after {
+    left: 2px;
+}
+
 

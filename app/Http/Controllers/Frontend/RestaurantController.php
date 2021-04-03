@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Helpers\PaginatorHelper;
 use App\Helpers\ScheduleHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateRestaurantRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\UpdateRestaurantScheduleRequest;
 use App\Models\Restaurant;
 use App\Models\RestaurantSchedule;
 use App\Models\RestaurantTag;
+use Illuminate\Http\Request;
 
 class RestaurantController extends Controller {
 
@@ -63,6 +65,7 @@ class RestaurantController extends Controller {
                 $restaurant->phone = $input['phone'];
                 $restaurant->mobile_phone = $input['mobile_phone'];
                 $restaurant->description = $input['description'];
+                $restaurant->save();
 
                 $restaurant->tags()->sync($input['restaurant_tags']);
 
@@ -127,5 +130,70 @@ class RestaurantController extends Controller {
 
         $request->session()->flash('success', 'Schedule information updated');
         return redirect()->route('restaurant.details');
+    }
+
+    public function restaurants(Request $request) {
+        $filter = $request->only([
+            'filter-name',
+            'filter-zip',
+            'filter-city',
+            'filter-address',
+            'filter-style'
+        ]);
+
+        $user = auth()->user();
+
+        $data = Restaurant::query();
+        if(array_key_exists('filter-name', $filter) && $filter['filter-name']) {
+            $data->where('name', 'LIKE', '%' . $filter['filter-name'] . '%');
+        }
+        if(array_key_exists('filter-zip', $filter) && $filter['filter-zip']) {
+            $data->where('zip_code', $filter['filter-zip']);
+        }
+        if(array_key_exists('filter-city', $filter) && $filter['filter-city']) {
+            $data->where('city', 'LIKE', '%' . $filter['filter-city'] . '%');
+        }
+        if(array_key_exists('filter-style', $filter) && $filter['filter-style']) {
+            $data->WhereHas('tags', function($query) use($filter) {
+                return $query->where('restaurant_tags.id', $filter['filter-style']);
+            });
+        }
+
+        $current_page = $request->input('page') ?? 1;
+        $offset = PaginatorHelper::offset($current_page);
+
+        $data->offset($offset)
+            ->limit(PaginatorHelper::ITEMS_PER_PAGE);
+
+        $data_count_all = Restaurant::count();
+        $restaurants = PaginatorHelper::paginate($data->get(), $data_count_all, $current_page, $request);
+
+        $styles = RestaurantTag::all()->pluck('name', 'id');
+        foreach($restaurants as $restaurant) {
+            $restaurant->styles = implode(', ', $restaurant->tags()->pluck('name')->toArray());
+        }
+
+        return view('restaurant.list', [
+            'restaurants' => $restaurants,
+            'styles' => $styles
+        ]);
+    }
+
+    public function restaurant_info(Request $request, $restaurantId) {
+        $user = auth()->user();
+
+        $restaurant = Restaurant::find($restaurantId);
+        if(!$restaurant) {
+            $request->session()->flash('error', 'No such restaurant');
+            return redirect()->route('restaurants');
+        }
+
+        $menu_categories = $restaurant->menu_categories;
+        $menu_items = $restaurant->menu_items;
+        return view('restaurant.info', [
+            'info' => $restaurant,
+            'menu_categories' => $menu_categories,
+            'menu_items' => $menu_items
+        ]);
     }
 }
