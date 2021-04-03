@@ -17,7 +17,7 @@
                         @if(isset($menu_items))
                             @forelse($menu_items as $menu_item)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route($menu_item['route']) }}">
+                                    <a class="nav-link @if(isset($active_page) && $menu_item['active_page'] == $active_page) active @endif" href="{{ route($menu_item['route']) }}">
                                         <i class="{{ $menu_item['icon'] }} text-primary"></i>
                                         <span class="nav-link-text">{{ $menu_item['text'] }}</span>
                                     </a>

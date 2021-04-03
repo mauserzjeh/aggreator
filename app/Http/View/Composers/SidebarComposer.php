@@ -17,28 +17,37 @@ class SidebarComposer {
             // TODO 
         ],
         UserType::TYPE_CUSTOMER => [
-            // TODO 
+            [
+                'route' => 'restaurants',
+                'icon' => 'fas fa-store-alt',
+                'text' => 'Restaurants',
+                'active_page' => 'restaurants'
+            ]
         ],
         UserType::TYPE_MANAGER => [
             [
                 'route' => 'restaurant.details',
                 'icon' => 'fas fa-store-alt',
-                'text' => 'Restaurant details'
+                'text' => 'Restaurant details',
+                'active_page' => 'restaurant.details',
             ],
             [
                 'route' => 'menu',
                 'icon' => 'fas fa-pizza-slice ',
-                'text' => 'Menu'
+                'text' => 'Menu',
+                'active_page' => 'menu'
             ],
             [
                 'route' => 'menu.categories',
                 'icon' => 'fas fa-utensils',
-                'text' => 'Menu categories'
+                'text' => 'Menu categories',
+                'active_page' => 'menu.categories'
             ],
             [
                 'route' => 'orders',
                 'icon' => 'fas fa-shipping-fast',
-                'text' => 'Orders'
+                'text' => 'Orders',
+                'active_page' => 'orders'
             ],
         ]
     ];
