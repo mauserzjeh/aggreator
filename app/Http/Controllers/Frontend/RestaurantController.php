@@ -220,10 +220,13 @@ class RestaurantController extends Controller {
         $order_items = $query->get();
         $total_price = $query->sum('price');
 
+        $deliveryinfo = $user->delivery_information;
+
         return view('restaurant.checkout', [
             'order_items' => $order_items,
             'total_price' => $total_price,
-            'restaurant_id' => $restaurantId
+            'restaurant_id' => $restaurantId,
+            'deliveryinfo' => $deliveryinfo
         ]);
     }
 
@@ -266,6 +269,12 @@ class RestaurantController extends Controller {
         
         $insert_order_items = [];
         $menu_items = MenuItem::whereIn('id', array_keys($item_quantities))->get();
+
+        if($menu_items->count() == 0) {
+            $request->session()->flash('success', 'No order was made');
+            return redirect()->route('restaurant.info', ['restaurantId' => $restaurantId]);
+        }
+
         foreach($menu_items as $menu_item) {
             $insert_order_items[] = [
                 'order_id' => $order->id,

@@ -29,28 +29,28 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-city">City</label>
-                                        <input type="text" id="input-city" class="form-control" placeholder="City" value="" name="city">
+                                        <input type="text" id="input-city" class="form-control" placeholder="City" value="{{ $deliveryinfo->city ?? '' }}" name="city">
                                         @include('components.form-feedback', ['field' => 'city'])
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-zip">ZIP</label>
-                                        <input type="text" id="input-zip" class="form-control" placeholder="ZIP" value="" name="zip_code">
+                                        <input type="text" id="input-zip" class="form-control" placeholder="ZIP" value="{{ $deliveryinfo->zip_code ?? '' }}" name="zip_code">
                                         @include('components.form-feedback', ['field' => 'zip_code'])
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-address">Address</label>
-                                        <input type="text" id="input-address" class="form-control" placeholder="Address" value="" name="address">
+                                        <input type="text" id="input-address" class="form-control" placeholder="Address" value="{{ $deliveryinfo->address ?? '' }}" name="address">
                                         @include('components.form-feedback', ['field' => 'address'])
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-phone">Phone</label>
-                                        <input type="text" id="input-phone" class="form-control" placeholder="Phone" value="" name="phone">
+                                        <input type="text" id="input-phone" class="form-control" placeholder="Phone" value="{{ $deliveryinfo->phone ?? '' }}" name="phone">
                                         @include('components.form-feedback', ['field' => 'phone'])
                                     </div>
                                 </div>
