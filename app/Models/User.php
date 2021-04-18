@@ -60,6 +60,10 @@ class User extends Authenticatable
         return $this->hasOne(Restaurant::class, 'user_id', 'id');
     }
 
+    public function delivery_information() {
+        return $this->hasOne(DeliveryInformation::class, 'user_id', 'id');
+    }
+
     /**
      * Name attribute mutator
      * 

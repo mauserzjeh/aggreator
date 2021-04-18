@@ -18,11 +18,17 @@ class SidebarComposer {
         ],
         UserType::TYPE_CUSTOMER => [
             [
+                'route' => 'deliveryinfo',
+                'icon' => 'fas fa-info',
+                'text' => 'Delivery information',
+                'active_page' => 'deliveryinfo'
+            ],
+            [
                 'route' => 'restaurants',
                 'icon' => 'fas fa-store-alt',
                 'text' => 'Restaurants',
                 'active_page' => 'restaurants'
-            ]
+            ],
         ],
         UserType::TYPE_MANAGER => [
             [

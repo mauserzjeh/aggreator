@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Models\DeliveryInformation;
 use App\Models\Restaurant;
 use App\Models\RestaurantSchedule;
 use App\Models\User;
@@ -59,6 +60,17 @@ class RegisterController extends Controller {
             $restaurant_schedule->restaurant_id = $restaurant->id;
             $restaurant_schedule->set_default_schedule();
             $restaurant_schedule->save();
+        }
+
+        //If customer registered, then setup some default stuff
+        if($input['register_as'] == UserType::TYPE_CUSTOMER) {
+            DeliveryInformation::create([
+                'user_id' => $user->id,
+                'city' => '',
+                'zip_code' => '',
+                'address' => '',
+                'phone' => ''
+            ]);
         }
 
         $request->session()->flash('success', 'Registration is successful.');
