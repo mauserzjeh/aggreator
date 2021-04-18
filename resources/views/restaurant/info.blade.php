@@ -39,51 +39,58 @@
             </div>
             <div id="restaurant-menu-body" class="collapse show" aria-labelledby="restaurant-menu-heading" data-parent="#restaurant-menu">
                 <div class="card-body">
+                    @include('components.form-feedback', ['field' => 'order_items'])
                     @if($menu_categories->count())
-                    <div class="row">
-                        <div class="col-2">
-                        </div>
-                        <div class="col-8">
-                            <div class="table-responsive my-3">
-                                <table class="table align-items-center">
-                                    <tbody class="list">
-                                        @foreach($menu_categories as $menu_category)
-                                            @php 
-                                                $items = $menu_items->where('menu_category_id', $menu_category->id);
-                                            @endphp
-                                            @if($items->count())
-                                                <tr>
-                                                    <td class="text-center menu-category" colspan="5"><h4>{{ $menu_category->name }}</h4></td>
-                                                </tr>
-                                                @foreach($items as $item)
-                                                <tr @if(!$item->description) data-toggle="tooltip" data-placement="top" title="{{ $item->description }}" @endif>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td class="text-right">{{ $item->price }}</td>
-                                                    <td class="text-right">
-                                                        @php
-                                                            $allergenes = implode(', ', $item->allergenes()->pluck('name')->toArray());
-                                                        @endphp
-                                                        @if($allergenes)
-                                                        <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="{{ $allergenes }}">
-                                                            <i class="fas fa-info-circle"></i> Allergenes
-                                                        </span>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-right">
-                                                        <label class="custom-toggle order">
-                                                            <input type="checkbox" name="order-{{ $item->id }}">
-                                                            <span class="custom-toggle-slider rounded-circle" data-label-off="Order" data-label-on="Order"></span>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                    <form action="{{ route('restaurant.checkout', ['restaurantId' => $info->id]) }}" method="post">
+                        <div class="row">
+                            @csrf 
+                            <div class="col-2">
+                                <div class="my-3 text-left">
+                                    <button type="submit" class="btn btn-primary btn-sm">Order selected</button>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="table-responsive my-3">
+                                    <table class="table align-items-center">
+                                        <tbody class="list">
+                                            @foreach($menu_categories as $menu_category)
+                                                @php 
+                                                    $items = $menu_items->where('menu_category_id', $menu_category->id);
+                                                @endphp
+                                                @if($items->count())
+                                                    <tr>
+                                                        <td class="text-center menu-category" colspan="5"><h4>{{ $menu_category->name }}</h4></td>
+                                                    </tr>
+                                                    @foreach($items as $item)
+                                                    <tr @if(!$item->description) data-toggle="tooltip" data-placement="top" title="{{ $item->description }}" @endif>
+                                                        <td>{{ $item->name }}</td>
+                                                        <td class="text-right">{{ $item->price }}€</td>
+                                                        <td class="text-right">
+                                                            @php
+                                                                $allergenes = implode(', ', $item->allergenes()->pluck('name')->toArray());
+                                                            @endphp
+                                                            @if($allergenes)
+                                                            <span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="{{ $allergenes }}">
+                                                                <i class="fas fa-info-circle"></i> Allergenes
+                                                            </span>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <label class="custom-toggle order">
+                                                                <input type="checkbox" name="order_items[]" value="{{ $item->id }}">
+                                                                <span class="custom-toggle-slider rounded-circle" data-label-off="Order" data-label-on="Order"></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                     @else
                     <div class="row">
                         <div class="col-12">

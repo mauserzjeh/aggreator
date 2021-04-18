@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\PaginatorHelper;
 use App\Helpers\ScheduleHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderCheckoutRequest;
 use App\Http\Requests\UpdateRestaurantRequest;
 use App\Http\Requests\UpdateRestaurantScheduleRequest;
+use App\Models\MenuItem;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Restaurant;
 use App\Models\RestaurantSchedule;
 use App\Models\RestaurantTag;
@@ -195,5 +199,85 @@ class RestaurantController extends Controller {
             'menu_categories' => $menu_categories,
             'menu_items' => $menu_items
         ]);
+    }
+
+    public function restaurant_checkout(OrderCheckoutRequest $request, $restaurantId) {
+        $user = auth()->user();
+
+        $restaurant = Restaurant::find($restaurantId);
+        if(!$restaurant) {
+            $request->session()->flash('error', 'No such restaurant');
+            return redirect()->route('restaurants');
+        }
+
+        $input = $request->only([
+            'order_items'
+        ]);
+
+        $query = MenuItem::where('restaurant_id', $restaurantId)
+                                ->whereIn('id', $input['order_items']);
+
+        $order_items = $query->get();
+        $total_price = $query->sum('price');
+
+        return view('restaurant.checkout', [
+            'order_items' => $order_items,
+            'total_price' => $total_price,
+            'restaurant_id' => $restaurantId
+        ]);
+    }
+
+    public function finalize_order(Request $request, $restaurantId) {
+        $user = auth()->user();
+
+        $restaurant = Restaurant::find($restaurantId);
+        if(!$restaurant) {
+            $request->session()->flash('error', 'No such restaurant');
+            return redirect()->route('restaurants');
+        }
+
+        $input = $request->only([
+            'city',
+            'zip_code',
+            'address',
+            'phone',
+            'order_items',
+            'order_quantities',
+        ]);
+
+        $order = Order::create([
+            'restaurant_id' => $restaurantId,
+            'customer_id' => $user->id,
+            'status' => Order::STATUS_QUEUED,
+            'city' => $input['city'],
+            'zip_code' => $input['zip_code'],
+            'address' => $input['address'],
+            'phone' => $input['phone'],
+        ]);
+
+
+        $item_quantities = [];
+        foreach($input['order_items'] as $idx => $order_item) {
+            if($input['order_quantities'][$idx] != 0) {
+                $item_quantities[$order_item] = $input['order_quantities'][$idx];
+            }
+        }
+
+        
+        $insert_order_items = [];
+        $menu_items = MenuItem::whereIn('id', array_keys($item_quantities))->get();
+        foreach($menu_items as $menu_item) {
+            $insert_order_items[] = [
+                'order_id' => $order->id,
+                'quantity' => $item_quantities[$menu_item->id],
+                'unit_price' => $menu_item->price,
+                'name' => $menu_item->name
+            ];
+        }
+
+        OrderItem::insert($insert_order_items);
+        
+        $request->session()->flash('success', 'Your order is under process');
+        return redirect()->route('restaurant.info', ['restaurantId' => $restaurantId]);
     }
 }
