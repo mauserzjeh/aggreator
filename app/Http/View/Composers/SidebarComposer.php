@@ -55,10 +55,10 @@ class SidebarComposer {
                 'active_page' => 'menu.categories'
             ],
             [
-                'route' => 'orders',
+                'route' => 'restaurant.orders',
                 'icon' => 'fas fa-shipping-fast',
                 'text' => 'Orders',
-                'active_page' => 'orders'
+                'active_page' => 'restaurant.orders'
             ],
         ]
     ];

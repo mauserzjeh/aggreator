@@ -32,4 +32,15 @@ class Order extends Model
     public function items() {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
+
+    public function total_price() {
+        $total = 0;
+
+        $orderItems = $this->items;
+        foreach($orderItems as $item) {
+            $total += ($item->unit_price * $item->quantity);
+        }
+
+        return $total;
+    }
 }
