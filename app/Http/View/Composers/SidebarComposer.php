@@ -14,7 +14,12 @@ class SidebarComposer {
      */
     const MENU_ITEMS = [
         UserType::TYPE_COURIER => [
-            // TODO 
+            [
+                'route' => 'availability',
+                'icon' => 'far fa-clock',
+                'text' => 'Availability',
+                'active_page' => 'availability'
+            ],
         ],
         UserType::TYPE_CUSTOMER => [
             [
