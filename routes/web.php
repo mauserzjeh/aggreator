@@ -58,8 +58,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 
     // Customer routes
-    Route::get('/delivery-info',    [\App\Http\Controllers\Frontend\DeliveryInformationController::class, 'index']) ->name('deliveryinfo');
-    Route::post('/delivery-info',   [\App\Http\Controllers\Frontend\DeliveryInformationController::class, 'update'])->name('deliveryinfo.update');
+    Route::get('/delivery-info',    [\App\Http\Controllers\Frontend\CustomerController::class, 'delivery_info']) ->name('deliveryinfo');
+    Route::post('/delivery-info',   [\App\Http\Controllers\Frontend\CustomerController::class, 'update_delivery_info'])->name('deliveryinfo.update');
 
     Route::get('/restaurants',                                  [\App\Http\Controllers\Frontend\RestaurantController::class, 'restaurants'])            ->name('restaurants');
     Route::get('/restaurants/{restaurantId}/info',              [\App\Http\Controllers\Frontend\RestaurantController::class, 'restaurant_info'])        ->name('restaurant.info');

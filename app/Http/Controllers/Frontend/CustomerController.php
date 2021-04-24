@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\DeliveryInformation;
 use Illuminate\Http\Request;
 
-class DeliveryInformationController extends Controller {
+class CustomerController extends Controller {
     
-    public function index() {
+    public function delivery_info() {
         $deliveryinfo = null;
 
         $user = auth()->user();
@@ -21,7 +21,7 @@ class DeliveryInformationController extends Controller {
         ]);
     }
 
-    public function update(Request $request) {
+    public function update_delivery_info(Request $request) {
         $input = $request->only([
             'deliveryinfo_id',
             'city',
