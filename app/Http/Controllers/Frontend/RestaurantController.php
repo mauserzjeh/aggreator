@@ -248,6 +248,21 @@ class RestaurantController extends Controller {
             'order_quantities',
         ]);
 
+        $item_quantities = [];
+        foreach($input['order_items'] as $idx => $order_item) {
+            if($input['order_quantities'][$idx] != 0) {
+                $item_quantities[$order_item] = $input['order_quantities'][$idx];
+            }
+        }
+
+        $insert_order_items = [];
+        $menu_items = MenuItem::whereIn('id', array_keys($item_quantities))->get();
+
+        if($menu_items->count() == 0) {
+            $request->session()->flash('success', 'No order was made');
+            return redirect()->route('restaurant.info', ['restaurantId' => $restaurantId]);
+        }
+
         $order = Order::create([
             'restaurant_id' => $restaurantId,
             'customer_id' => $user->id,
@@ -257,23 +272,6 @@ class RestaurantController extends Controller {
             'address' => $input['address'],
             'phone' => $input['phone'],
         ]);
-
-
-        $item_quantities = [];
-        foreach($input['order_items'] as $idx => $order_item) {
-            if($input['order_quantities'][$idx] != 0) {
-                $item_quantities[$order_item] = $input['order_quantities'][$idx];
-            }
-        }
-
-        
-        $insert_order_items = [];
-        $menu_items = MenuItem::whereIn('id', array_keys($item_quantities))->get();
-
-        if($menu_items->count() == 0) {
-            $request->session()->flash('success', 'No order was made');
-            return redirect()->route('restaurant.info', ['restaurantId' => $restaurantId]);
-        }
 
         foreach($menu_items as $menu_item) {
             $insert_order_items[] = [
