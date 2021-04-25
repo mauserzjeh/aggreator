@@ -6,6 +6,7 @@ use App\Helpers\PaginatorHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\Availability;
 
 class OrderController extends Controller {
 
@@ -66,8 +67,53 @@ class OrderController extends Controller {
             return redirect()->route('restaurant.orders');
         }
 
+        $in = false;
+        $couriers = Availability::get_available_couriers();
+        foreach($couriers as $c) {
+            if($order->courier && $c->id == $order->courier->id) {
+                $in = true;
+                break;
+            }
+        }
+
+        if(!$in && $order->courier) {
+            $couriers[] = $order->courier;
+        }
+
         return view('restaurant.order-info', [
-            'order' => $order
+            'order' => $order,
+            'statuses' => Order::STATUSES,
+            'couriers' => Availability::get_available_couriers()
         ]);
+    }
+
+    public function order_update(Request $request, $orderId) {
+        $user = auth()->user();
+
+        $order = Order::find($orderId);
+        if(!$order) {
+            $request->session()->flash('error', 'No such order');
+            return redirect()->route('restaurant.orders');
+        }
+
+        if($order->restaurant_id != $user->restaurant->id) {
+            $request->session()->flash('error', 'This order does not belong to your restaurant');
+            return redirect()->route('restaurant.orders');
+        }
+
+        $input = $request->only([
+            'courier',
+            'status',
+            'expected_delivery_time'
+        ]);
+
+        $order->courier_id = $input['courier'];
+        $order->status = $input['status'];
+        $order->expected_delivery_time = $input['expected_delivery_time'];
+        $order->save();
+
+        $request->session()->flash('success', 'Order successfully updated');
+        return redirect()->route('restaurant.orders');
+
     }
 }

@@ -81,5 +81,27 @@ class Availability extends Model
         }
     }
 
+    public static function get_available_couriers() {
+        $couriers = [];
+
+        $current_day = strtolower(date('D'));
+        $current_time = intval(date('H')) * 60 + intval(date('i'));
+
+        $prop_b = $current_day . '_b';
+        $prop_e = $current_day . '_e';
+
+        $availabilities = Availability::where($prop_b, '<=', $current_time)
+                                        ->where($prop_e, '>=', $current_time)
+                                        ->get();
+
+        foreach($availabilities as $availability) {
+            if($availability->$prop_e - $availability->$prop_b > 0) {
+                $couriers[] = $availability->courier;
+            }
+        }
+
+        return $couriers;
+    }
+
 
 }

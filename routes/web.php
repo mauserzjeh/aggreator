@@ -64,9 +64,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/menu-categories/{categoryId}/delete',  [\App\Http\Controllers\Frontend\MenuController::class,          'delete_category']) ->name('menu.categories.delete');
     
     //Orders
-    Route::get('/restaurant-orders',                [\App\Http\Controllers\Frontend\OrderController::class, 'orders_index'])    ->name('restaurant.orders');
-    Route::get('/restaurant-orders/{orderId}/info', [\App\Http\Controllers\Frontend\OrderController::class, 'order_info'])      ->name('order.info');
-    
+    Route::get('/restaurant-orders',                    [\App\Http\Controllers\Frontend\OrderController::class, 'orders_index'])    ->name('restaurant.orders');
+    Route::get('/restaurant-orders/{orderId}/info',     [\App\Http\Controllers\Frontend\OrderController::class, 'order_info'])      ->name('order.info');
+    Route::post('/restaurant-orders/{orderId}/update',  [\App\Http\Controllers\Frontend\OrderController::class, 'order_update'])    ->name('order.update');
     
     
     
