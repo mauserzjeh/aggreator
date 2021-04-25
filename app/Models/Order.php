@@ -22,7 +22,9 @@ class Order extends Model
     protected $fillable = [
         'restaurant_id',
         'customer_id',
+        'courier_id',
         'status',
+        'expected_delivery_time',
         'city',
         'zip_code',
         'address',
@@ -31,5 +33,24 @@ class Order extends Model
 
     public function items() {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
+
+    public function customer() {
+        return $this->hasOne(User::class, 'id', 'customer_id');
+    }
+
+    public function courier() {
+        return $this->hasOne(User::class, 'id', 'courier_id');
+    }
+
+    public function total_price() {
+        $total = 0;
+
+        $orderItems = $this->items;
+        foreach($orderItems as $item) {
+            $total += ($item->unit_price * $item->quantity);
+        }
+
+        return $total;
     }
 }
