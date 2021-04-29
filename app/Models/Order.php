@@ -19,11 +19,20 @@ class Order extends Model
         self::STATUS_DELIVERED => 'Delivered'
     ];
 
+    const TYPE_DELIVERY = 'delivery';
+    const TYPE_TAKEAWAY = 'take_away';
+
+    const DELIVERY_TYPES = [
+        self::TYPE_DELIVERY => 'Delivery',
+        self::TYPE_TAKEAWAY => 'Take away'
+    ];
+
     protected $fillable = [
         'restaurant_id',
         'customer_id',
         'courier_id',
         'status',
+        'delivery_type',
         'expected_delivery_time',
         'city',
         'zip_code',
