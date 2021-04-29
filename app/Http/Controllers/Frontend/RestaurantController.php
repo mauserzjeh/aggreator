@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Helpers\PaginatorHelper;
 use App\Helpers\ScheduleHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FinalizeOrderRequest;
 use App\Http\Requests\OrderCheckoutRequest;
 use App\Http\Requests\UpdateRestaurantRequest;
 use App\Http\Requests\UpdateRestaurantScheduleRequest;
@@ -230,7 +231,7 @@ class RestaurantController extends Controller {
         ]);
     }
 
-    public function finalize_order(Request $request, $restaurantId) {
+    public function finalize_order(FinalizeOrderRequest $request, $restaurantId) {
         $user = auth()->user();
 
         $restaurant = Restaurant::find($restaurantId);
@@ -244,6 +245,7 @@ class RestaurantController extends Controller {
             'zip_code',
             'address',
             'phone',
+            'delivery_type',
             'order_items',
             'order_quantities',
         ]);
@@ -267,6 +269,7 @@ class RestaurantController extends Controller {
             'restaurant_id' => $restaurantId,
             'customer_id' => $user->id,
             'status' => Order::STATUS_QUEUED,
+            'delivery_type' => $input['delivery_type'],
             'city' => $input['city'],
             'zip_code' => $input['zip_code'],
             'address' => $input['address'],
