@@ -29,6 +29,12 @@ class SidebarComposer {
                 'active_page' => 'deliveryinfo'
             ],
             [
+                'route' => 'customer.orders',
+                'icon' => 'fas fa-cookie-bite',
+                'text' => 'My orders',
+                'active_page' => 'customer.orders'
+            ],
+            [
                 'route' => 'restaurants',
                 'icon' => 'fas fa-store-alt',
                 'text' => 'Restaurants',

@@ -81,7 +81,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/restaurants/{restaurantId}/info',              [\App\Http\Controllers\Frontend\RestaurantController::class, 'restaurant_info'])        ->name('restaurant.info');
     Route::post('/restaurants/{restaurantId}/checkout',         [\App\Http\Controllers\Frontend\RestaurantController::class, 'restaurant_checkout'])    ->name('restaurant.checkout');
     Route::post('/restaurants/{restaurantId}/finalize-order',   [\App\Http\Controllers\Frontend\RestaurantController::class, 'finalize_order'])         ->name('finalize.order');
-
+    
+    //Orders
+    Route::get('/my-orders',            [\App\Http\Controllers\Frontend\OrderController::class, 'customer_orders'])     ->name('customer.orders');
+    Route::get('/my-orders/{orderId}',  [\App\Http\Controllers\Frontend\OrderController::class, 'customer_order_info']) ->name('customer.order.info');
     
     
     ///////////////////////// COURIER ROUTES /////////////////////////
@@ -89,4 +92,5 @@ Route::group(['middleware' => 'auth'], function() {
     //Availability
     Route::get('/availability',     [\App\Http\Controllers\Frontend\CourierController::class, 'availability_index'])    ->name('availability');
     Route::post('/availability',    [\App\Http\Controllers\Frontend\CourierController::class, 'update_availability'])   ->name('availability.update');
+
 });
