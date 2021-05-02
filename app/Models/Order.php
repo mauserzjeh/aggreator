@@ -45,11 +45,15 @@ class Order extends Model
     }
 
     public function customer() {
-        return $this->hasOne(User::class, 'id', 'customer_id');
+        return $this->belongsTo(User::class, 'customer_id', 'id');
     }
 
     public function courier() {
-        return $this->hasOne(User::class, 'id', 'courier_id');
+        return $this->belongsTo(User::class, 'courier_id', 'id');
+    }
+
+    public function restaurant() {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 
     public function total_price() {
