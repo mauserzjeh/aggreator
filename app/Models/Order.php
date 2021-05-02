@@ -12,11 +12,21 @@ class Order extends Model
     const STATUS_QUEUED = 'queued';
     const STATUS_INPROGRESS = 'in_progress';
     const STATUS_DELIVERED = 'delivered';
+    const STATUS_TO_BE_DELIVERED = 'to_be_delivered';
 
     const STATUSES = [
         self::STATUS_QUEUED => 'Queued',
         self::STATUS_INPROGRESS => 'In progress',
-        self::STATUS_DELIVERED => 'Delivered'
+        self::STATUS_DELIVERED => 'Delivered',
+        self::STATUS_TO_BE_DELIVERED => 'To be delivered'
+    ];
+
+    const TYPE_DELIVERY = 'delivery';
+    const TYPE_TAKEAWAY = 'take_away';
+
+    const DELIVERY_TYPES = [
+        self::TYPE_DELIVERY => 'Delivery',
+        self::TYPE_TAKEAWAY => 'Take away'
     ];
 
     protected $fillable = [
@@ -24,6 +34,7 @@ class Order extends Model
         'customer_id',
         'courier_id',
         'status',
+        'delivery_type',
         'expected_delivery_time',
         'city',
         'zip_code',
@@ -36,11 +47,15 @@ class Order extends Model
     }
 
     public function customer() {
-        return $this->hasOne(User::class, 'id', 'customer_id');
+        return $this->belongsTo(User::class, 'customer_id', 'id');
     }
 
     public function courier() {
-        return $this->hasOne(User::class, 'id', 'courier_id');
+        return $this->belongsTo(User::class, 'courier_id', 'id');
+    }
+
+    public function restaurant() {
+        return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
 
     public function total_price() {

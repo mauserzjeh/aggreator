@@ -54,6 +54,17 @@
                                         @include('components.form-feedback', ['field' => 'phone'])
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="input-delivery-type" class="form-control-label">Delivery type</label>
+                                        <select name="delivery_type" id="input-delivery-type" class="form-control">
+                                            <option value="" selected>Select</option>
+                                            @foreach(\App\Models\Order::DELIVERY_TYPES as $value => $name)
+                                            <option value="{{ $value }}">{{ $name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -128,6 +139,9 @@
                     required: true
                 },
                 phone: {
+                    required: true
+                },
+                delivery_type: {
                     required: true
                 }
             }

@@ -20,13 +20,16 @@
                     @if($actions)
                     <td class="text-right">
                             @if(array_key_exists('edit', $actions))
-                            <a href="{{ route($actions['edit']['route_name'], [$actions['edit']['route_idparam'] => $row->id]) }}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="{{ route($actions['edit']['route_name'], [$actions['edit']['route_idparam'] => $row->id]) }}" class="btn btn-success btn-sm"><i class="@if(array_key_exists('icon', $actions['edit'])) {{ $actions['edit']['icon'] }} @else fas fa-edit @endif"></i></a>
                             @endif
                             @if(array_key_exists('delete', $actions))
                             <button type="button" data-href="{{ route($actions['delete']['route_name'], [$actions['delete']['route_idparam'] => $row->id]) }}" class="btn btn-warning btn-sm delete-button" data-toggle="modal" data-original-title="Delete" title="Delete" data-target="#delete-modal"><i class="fas fa-trash-alt"></i></button>
                             @endif
                             @if(array_key_exists('info', $actions))
                             <a href="{{ route($actions['info']['route_name'], [$actions['info']['route_idparam'] => $row->id]) }}" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i></a>
+                            @endif
+                            @if(array_key_exists('dismiss', $actions))
+                            <a href="{{ route($actions['dismiss']['route_name'], [$actions['dismiss']['route_idparam'] => $row->id]) }}" class="btn btn-warning btn-sm"><i class="fas fa-times"></i></a>
                             @endif
                     </td>
                     @endif
