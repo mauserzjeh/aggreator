@@ -20,6 +20,12 @@ class SidebarComposer {
                 'text' => 'Availability',
                 'active_page' => 'availability'
             ],
+            [
+                'route' => 'courier.orders',
+                'icon' => 'fas fa-shipping-fast',
+                'text' => 'Deliveries',
+                'active_page' => 'courier.orders'
+            ],
         ],
         UserType::TYPE_CUSTOMER => [
             [
