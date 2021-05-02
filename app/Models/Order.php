@@ -12,11 +12,13 @@ class Order extends Model
     const STATUS_QUEUED = 'queued';
     const STATUS_INPROGRESS = 'in_progress';
     const STATUS_DELIVERED = 'delivered';
+    const STATUS_TO_BE_DELIVERED = 'to_be_delivered';
 
     const STATUSES = [
         self::STATUS_QUEUED => 'Queued',
         self::STATUS_INPROGRESS => 'In progress',
-        self::STATUS_DELIVERED => 'Delivered'
+        self::STATUS_DELIVERED => 'Delivered',
+        self::STATUS_TO_BE_DELIVERED => 'To be delivered'
     ];
 
     const TYPE_DELIVERY = 'delivery';
