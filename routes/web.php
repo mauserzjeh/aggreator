@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/my-orders',            [\App\Http\Controllers\Frontend\OrderController::class, 'customer_orders'])     ->name('customer.orders');
     Route::get('/my-orders/{orderId}',  [\App\Http\Controllers\Frontend\OrderController::class, 'customer_order_info']) ->name('customer.order.info');
     
+    
     ///////////////////////// COURIER ROUTES /////////////////////////
 
     //Availability
