@@ -25,6 +25,21 @@ $(() => {
         return true;
     });
 
+    $.validator.addMethod('greater_date', (value, element, param) => {
+        let date = new Date(value);
+        let other_date = new Date($(param).val());
+
+        if (/Invalid/.test(date)) {
+            return true;
+        }
+
+        if (/Invalid/.test(other_date)) {
+            return true;
+        }
+
+        return date > other_date;
+    });
+
     $('button.delete-button').on('click', function() {
         if($('#delete-modal').length) {
             $('#delete-submit-button').attr('href', $(this).data('href'))
