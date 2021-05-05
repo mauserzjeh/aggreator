@@ -12,6 +12,7 @@ class Discount extends Model
     protected $fillable = [
         'user_id',
         'restaurant_id',
+        'name',
         'amount_percent',
         'start_timestamp',
         'end_timestamp',
