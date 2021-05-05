@@ -25,6 +25,11 @@
                     'type' => 'select',
                     'options' => $statuses
                 ],
+                [
+                    'id' => 'created_at',
+                    'label' => 'Created at',
+                    'type' => 'datepicker'
+                ]
             ]
         ]
     ])
