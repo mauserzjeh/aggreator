@@ -74,11 +74,16 @@
                                 <table class="table">
                                     <tbody class="list">
                                     @foreach($order_items as $item)
+                                        @php
+                                            $price = $item->price;
+                                            $discounted_price = $item->discounted_price();
+                                        @endphp
                                         <tr>
                                             <input type="hidden" value="{{ $item->id }}" name="order_items[]">
                                             <input type="hidden" value="{{ $item->price }}" disabled class="price-hidden">
+                                            <input type="hidden" value="{{ $item->discounted_price() }}" disabled class="price-hidden-discounted">
                                             <td>{{ $item->name }}</td>
-                                            <td class="text-right item-price">{{ $item->price }}€</td>
+                                            <td class="text-right item-price">@if($price != $discounted_price) <s>{{ $price }}</s>&nbsp;&nbsp;&nbsp;<b>{{ $discounted_price }}</b>€ @else {{ $price }}€ @endif</td>
                                             <td>&times;</td>
                                             <td>
                                                 <div class="row">
@@ -87,12 +92,12 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="text-right item-price-final">{{ $item->price }}€</td>
+                                            <td class="text-right item-price-final">@if($price != $discounted_price) <s>{{ $price }}</s>&nbsp;&nbsp;&nbsp;<b>{{ $discounted_price }}</b>€ @else {{ $price }}€ @endif</td>
                                         </tr>
                                     @endforeach
                                     <tr>
                                         <td colspan="4"><b>Total</b></td>
-                                        <td class="text-right"><b id="overall-price">{{ $total_price }}€</b></td>
+                                        <td class="text-right"><b id="overall-price">@if($total_price != $total_price_discounted) <s>{{ $total_price }}</s>&nbsp;&nbsp;&nbsp;{{ $total_price_discounted }}€ @else {{ $total_price }}€ @endif</b></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -112,11 +117,19 @@
         $('input.order-quantity').on('change', function() {
             let quantity = $(this).val();
             let price = $(this).closest('tr').find('input.price-hidden').val();
+            let price_discounted = $(this).closest('tr').find('input.price-hidden-discounted').val();
             let final_price = $(this).closest('tr').find('td.item-price-final');
             let overall_price = $('b#overall-price');
 
             fp = quantity * price;
-            final_price.html(fp + "€");
+            fp_discounted = (quantity * price_discounted).toFixed(1);
+            let fp_html = ''
+            if(fp != fp_discounted) {
+                fp_html += "<s>" + fp + "</s>  <b>" + fp_discounted + "€</b>"
+            } else {
+                fp_html = fp + "€";
+            }
+            final_price.html(fp_html);
 
             op = 0;
             $('input.price-hidden').each(function() {
@@ -124,7 +137,19 @@
                 op += (q * $(this).val());
             });
 
-            overall_price.html(op + "€");
+            op_discounted = 0;
+            $('input.price-hidden-discounted').each(function() {
+                let q2 = $(this).closest('tr').find('input.order-quantity').val();
+                op_discounted += (q2 * $(this).val());
+            })
+
+            let op_html = ''
+            if(op != op_discounted) {
+                op_html += "<s>" + op + "</s>  " + op_discounted.toFixed(1) + "€"
+            } else {
+                op_html = op + "€";
+            }
+            overall_price.html(op_html);
         });
 
         $('form#restaurant-checkout-form').validate({

@@ -72,6 +72,12 @@ class SidebarComposer {
                 'text' => 'Orders',
                 'active_page' => 'restaurant.orders'
             ],
+            [
+                'route' => 'discounts',
+                'icon' => 'fas fa-percent',
+                'text' => 'Discounts',
+                'active_page' => 'discounts'
+            ]
         ]
     ];
 

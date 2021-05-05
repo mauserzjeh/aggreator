@@ -64,7 +64,12 @@
                                                     @foreach($items as $item)
                                                     <tr @if(!$item->description) data-toggle="tooltip" data-placement="top" title="{{ $item->description }}" @endif>
                                                         <td>{{ $item->name }}</td>
-                                                        <td class="text-right">{{ $item->price }}€</td>
+
+                                                        @php
+                                                            $price = $item->price;
+                                                            $discounted_price = $item->discounted_price();
+                                                        @endphp
+                                                        <td class="text-right">@if($price != $discounted_price) <s>{{ $price }}</s>&nbsp;&nbsp;&nbsp;<b>{{ $discounted_price }}</b>€ @else {{ $price }}€ @endif</td>
                                                         <td class="text-right">
                                                             @php
                                                                 $allergenes = implode(', ', $item->allergenes()->pluck('name')->toArray());

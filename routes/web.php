@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MenuItem;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,8 +69,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/restaurant-orders/{orderId}/info',     [\App\Http\Controllers\Frontend\OrderController::class, 'order_info'])      ->name('order.info');
     Route::post('/restaurant-orders/{orderId}/update',  [\App\Http\Controllers\Frontend\OrderController::class, 'order_update'])    ->name('order.update');
     
-    
-    
+    //Discounts
+    Route::get('/discounts',                        [\App\Http\Controllers\Frontend\DiscountController::class, 'index'])    ->name('discounts');
+    Route::get('/discounts/{discountId}/edit',      [\App\Http\Controllers\Frontend\DiscountController::class, 'edit'])     ->name('discount.edit');
+    Route::post('/discounts/{discountId}/save',     [\App\Http\Controllers\Frontend\DiscountController::class, 'save'])     ->name('discount.save');
+    Route::get('/discounts/{discountId}/delete',    [\App\Http\Controllers\Frontend\DiscountController::class, 'delete'])   ->name('discount.delete');
+
     ///////////////////////// CUSTOMER ROUTES /////////////////////////
 
     //Delivery info
