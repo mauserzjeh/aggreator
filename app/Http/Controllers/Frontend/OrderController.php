@@ -15,7 +15,9 @@ class OrderController extends Controller {
         $filter = $request->only([
             'filter-status',
             'filter-city',
-            'filter-zip'
+            'filter-zip',
+            'filter-created_at',
+            'filter-relation-created_at'
         ]);
 
         $user = auth()->user();
@@ -29,6 +31,9 @@ class OrderController extends Controller {
         }
         if(array_key_exists('filter-zip', $filter) && $filter['filter-zip']) {
             $data->where('zip_code', $filter['filter-zip']);
+        }
+        if(array_key_exists('filter-created_at', $filter) && $filter['filter-created_at']) {
+            $data->where('created_at', $filter['filter-relation-created_at'], $filter['filter-created_at']);
         }
 
         $current_page = $request->input('page') ?? 1;
@@ -122,9 +127,10 @@ class OrderController extends Controller {
         $filter = $request->only([
             'filter-id',
             'filter-restaurant',
-            'filter-status'
+            'filter-status',
+            'filter-created_at',
+            'filter-relation-created_at'
         ]);
-
 
         $user = auth()->user();
 
@@ -137,6 +143,9 @@ class OrderController extends Controller {
         }
         if(array_key_exists('filter-status', $filter) && $filter['filter-status']) {
             $data->where('status', $filter['filter-status']);
+        }
+        if(array_key_exists('filter-created_at', $filter) && $filter['filter-created_at']) {
+            $data->where('created_at', $filter['filter-relation-created_at'], $filter['filter-created_at']);
         }
 
         $current_page = $request->input('page') ?? 1;
@@ -188,7 +197,9 @@ class OrderController extends Controller {
         $filter = $request->only([
             'filter-id',
             'filter-restaurant',
-            'filter-status'
+            'filter-status',
+            'filter-created_at',
+            'filter-relation-created_at'
         ]);
 
         $user = auth()->user();
@@ -203,6 +214,9 @@ class OrderController extends Controller {
         }
         if(array_key_exists('filter-status', $filter) && $filter['filter-status']) {
             $data->where('status', $filter['filter-status']);
+        }
+        if(array_key_exists('filter-created_at', $filter) && $filter['filter-created_at']) {
+            $data->where('created_at', $filter['filter-relation-created_at'], $filter['filter-created_at']);
         }
 
         $current_page = $request->input('page') ?? 1;
