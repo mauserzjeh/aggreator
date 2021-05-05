@@ -17,9 +17,10 @@ class CreateDiscountsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('restaurant_id');
+            $table->string('name');
             $table->float('amount_percent');
-            $table->dateTime('start_timestamp');
-            $table->dateTime('end_timestamp');
+            $table->date('start_timestamp')->nullable();
+            $table->date('end_timestamp')->nullable();
             $table->tinyInteger('active');
             $table->timestamps();
 
