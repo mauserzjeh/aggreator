@@ -199,7 +199,8 @@ class OrderController extends Controller {
             'filter-restaurant',
             'filter-status',
             'filter-created_at',
-            'filter-relation-created_at'
+            'filter-relation-created_at',
+            'filter-priority'
         ]);
 
         $user = auth()->user();
@@ -218,11 +219,17 @@ class OrderController extends Controller {
         if(array_key_exists('filter-created_at', $filter) && $filter['filter-created_at']) {
             $data->where('created_at', $filter['filter-relation-created_at'], $filter['filter-created_at']);
         }
+        if(array_key_exists('filter-priority', $filter) && $filter['filter-priority']) {
+            $data->where('priority', $filter['filter-priority']);
+        }
+        
 
         $current_page = $request->input('page') ?? 1;
         $offset = PaginatorHelper::offset($current_page);
 
-        $data->offset($offset)
+        $data->orderBy('priority', 'DESC')
+            ->orderBy('id', 'ASC')
+            ->offset($offset)
             ->limit(PaginatorHelper::ITEMS_PER_PAGE);
         
         $data_count_all = Order::where('courier_id', $user->id)->count();
@@ -231,6 +238,10 @@ class OrderController extends Controller {
         foreach($orders as $order) {
             if(array_key_exists($order->status, Order::STATUSES)) {
                 $order->status = Order::STATUSES[$order->status];
+            }
+            if(array_key_exists($order->priority, Order::PRIORITIES)) {
+                $p = Order::PRIORITIES[$order->priority];
+                $order->priority = '<b class="priority-' . strtolower($p) . '">' . $p . "</b>";
             }
 
             $order->full_address = $order->city . ' (' . $order->zip_code . ') ' . $order->address;
@@ -293,6 +304,43 @@ class OrderController extends Controller {
         $order->save();
 
         $request->session()->flash('success', 'Delivery successfully rejected');
+        return redirect()->route('courier.orders');
+    }
+
+    public function courier_order_priority(Request $request, $orderId, $priority) {
+
+        $user = auth()->user();
+
+        $order = Order::find($orderId);
+        if(!$order) {
+            $request->session()->flash('error', 'No such order');
+            return redirect()->route('courier.orders');
+        }
+
+        if($order->courier_id != $user->id) {
+            $request->session()->flash('error', 'This order does not belong to you');
+            return redirect()->route('courier.orders');
+        }
+
+        if($priority != Order::PRIORITY_HIGHER && $priority != Order::PRIORITY_LOWER) {
+            $request->session()->flash('error', 'Parameter error');
+            return redirect()->route('courier.orders');
+        }
+
+        if($priority == Order::PRIORITY_HIGHER) {
+            if($order->priority < 3) {
+                $order->priority++;
+            }
+        }
+
+        if($priority == Order::PRIORITY_LOWER) {
+            if($order->priority > 1) {
+                $order->priority--;
+            }
+        }
+
+        $order->save();
+        $request->session()->flash('success', 'Priority successfully updated');
         return redirect()->route('courier.orders');
     }
 }

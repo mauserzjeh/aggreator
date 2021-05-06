@@ -29,11 +29,25 @@ class Order extends Model
         self::TYPE_TAKEAWAY => 'Take away'
     ];
 
+    const PRIORITY_LOW = 1;
+    const PRIORITY_NORMAL = 2;
+    const PRIORITY_HIGH = 3;
+
+    const PRIORITIES = [
+        self::PRIORITY_LOW => "Low",
+        self::PRIORITY_NORMAL => "Normal",
+        self::PRIORITY_HIGH => "High"
+    ];
+
+    const PRIORITY_HIGHER = '+';
+    const PRIORITY_LOWER = '-';
+
     protected $fillable = [
         'restaurant_id',
         'customer_id',
         'courier_id',
         'status',
+        'priority',
         'delivery_type',
         'expected_delivery_time',
         'city',
