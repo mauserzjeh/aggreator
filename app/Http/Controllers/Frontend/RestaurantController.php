@@ -274,6 +274,7 @@ class RestaurantController extends Controller {
             'restaurant_id' => $restaurantId,
             'customer_id' => $user->id,
             'status' => Order::STATUS_QUEUED,
+            'priority' => Order::PRIORITY_NORMAL,
             'delivery_type' => $input['delivery_type'],
             'city' => $input['city'],
             'zip_code' => $input['zip_code'],

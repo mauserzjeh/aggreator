@@ -102,4 +102,5 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/my-deliveries/{orderId}',              [\App\Http\Controllers\Frontend\OrderController::class, 'courier_order_info'])      ->name('courier.order.info');
     Route::get('/my-deliveries/{orderId}/delivered',    [\App\Http\Controllers\Frontend\OrderController::class, 'courier_order_delivered']) ->name('courier.order.delivered');
     Route::get('/my-deliveries/{orderId}/reject',       [\App\Http\Controllers\Frontend\OrderController::class, 'courier_order_reject'])    ->name('courier.order.reject');
+    Route::get('/my-deliveries/{orderId}/{priority}',   [\App\Http\Controllers\Frontend\OrderController::class, 'courier_order_priority'])  ->name('courier.order.priority');
 });
