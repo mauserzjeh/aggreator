@@ -1,4 +1,6 @@
-@extends('layouts.application')
+@extends('layouts.application', [
+    'active_page' => 'menu'
+])
 @section('title', 'Menu')
 
 @section('content')

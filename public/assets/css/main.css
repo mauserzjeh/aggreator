@@ -51,4 +51,16 @@ label.custom-toggle.order input:checked+.custom-toggle-slider:after {
     left: 2px;
 }
 
+.priority-low {
+    color: darkgreen;
+}
+
+.priority-normal {
+    color:darkorange;
+}
+
+.priority-high {
+    color:darkred;
+}
+
 

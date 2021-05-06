@@ -28,4 +28,28 @@ class MenuItem extends Model
     public function restaurant() {
         return $this->belongsTo(Restaurant::class, 'restaurant_id', 'id');
     }
+
+    public function discounts() {
+        return $this->belongsToMany(Discount::class, 'discounts_menu_items', 'menu_item_id', 'discount_id');
+    }
+
+    public function discounted_price() {
+        $item_discounts = $this->discounts()
+                        ->where('start_timestamp', '<=', date('Y-m-d'))
+                        ->where('end_timestamp', '>=', date('Y-m-d'))
+                        ->where('active', 1)
+                        ->get();
+        
+        $category_discounts = $this->category
+                                ->discounts()
+                                ->where('start_timestamp', '<=', date('Y-m-d'))
+                                ->where('end_timestamp', '>=', date('Y-m-d'))
+                                ->where('active', 1)
+                                ->get();
+
+        $discounts = $item_discounts->merge($category_discounts);
+        $max_discount = $discounts->max('amount_percent');
+        
+        return $this->price * ((100-$max_discount) / 100);
+    }
 }

@@ -10,6 +10,7 @@
 <script src="/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
 <script src="/assets/vendor/moment/min/moment.min.js"></script>
+<script src="/assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 <!-- Argon JS -->
 <script src="/assets/js/argon.min.js"></script>
 <!-- main JS  -->

@@ -23,6 +23,11 @@
                     'id' => 'zip',
                     'label' => 'ZIP'
                 ],
+                [
+                    'id' => 'created_at',
+                    'label' => 'Created at',
+                    'type' => 'datepicker'
+                ]
             ]
         ]
     ])

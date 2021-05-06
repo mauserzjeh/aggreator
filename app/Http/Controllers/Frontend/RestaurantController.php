@@ -220,12 +220,17 @@ class RestaurantController extends Controller {
 
         $order_items = $query->get();
         $total_price = $query->sum('price');
+        $total_price_discounted = 0;
+        foreach($order_items as $order_item) {
+            $total_price_discounted += $order_item->discounted_price();
+        }
 
         $deliveryinfo = $user->delivery_information;
 
         return view('restaurant.checkout', [
             'order_items' => $order_items,
             'total_price' => $total_price,
+            'total_price_discounted' => $total_price_discounted,
             'restaurant_id' => $restaurantId,
             'deliveryinfo' => $deliveryinfo
         ]);
@@ -269,6 +274,7 @@ class RestaurantController extends Controller {
             'restaurant_id' => $restaurantId,
             'customer_id' => $user->id,
             'status' => Order::STATUS_QUEUED,
+            'priority' => Order::PRIORITY_NORMAL,
             'delivery_type' => $input['delivery_type'],
             'city' => $input['city'],
             'zip_code' => $input['zip_code'],
@@ -280,7 +286,7 @@ class RestaurantController extends Controller {
             $insert_order_items[] = [
                 'order_id' => $order->id,
                 'quantity' => $item_quantities[$menu_item->id],
-                'unit_price' => $menu_item->price,
+                'unit_price' => $menu_item->discounted_price(),
                 'name' => $menu_item->name
             ];
         }

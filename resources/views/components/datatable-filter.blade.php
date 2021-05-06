@@ -19,8 +19,30 @@
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
                                         </select>
+                                        @elseif(isset($input['type']) && $input['type'] == 'datepicker')
+                                        <div class="input-group">
+                                            <select class="form-control form-control-sm col-3" name="filter-relation-{{ $input['id'] }}">
+                                                <option value="=" selected>=</option>
+                                                <option value=">">></option>
+                                                <option value="<"><</option>
+                                                <option value=">=">>=</option>
+                                                <option value="<="><=</option>
+                                            </select>
+                                            <input class="form-control form-control-sm datepicker" placeholder="{{ $input['placeholder'] ?? '' }}" type="text" value="{{ $input['value'] ?? '' }}" name="filter-{{ $input['id'] }}">
+                                        </div>
                                         @else
-                                        <input class="form-control form-control-sm" type="{{ $input['type'] ?? 'text' }}" id="filter-{{ $input['id'] }}" placeholder="{{ $input['placeholder'] ?? '' }}" value="{{ $input['value'] ?? '' }}" name="filter-{{ $input['id'] }}">
+                                        <div class="input-group">
+                                            @if(isset($input['relation']))
+                                            <select class="form-control form-control-sm col-3" name="filter-relation-{{ $input['id'] }}">
+                                                <option value="=" selected>=</option>
+                                                <option value=">">></option>
+                                                <option value="<"><</option>
+                                                <option value=">=">>=</option>
+                                                <option value="<="><=</option>
+                                            </select>
+                                            @endif
+                                            <input class="form-control form-control-sm" type="{{ $input['type'] ?? 'text' }}" id="filter-{{ $input['id'] }}" placeholder="{{ $input['placeholder'] ?? '' }}" value="{{ $input['value'] ?? '' }}" name="filter-{{ $input['id'] }}">
+                                        </div>
                                         @endif  
                                     </div>
                                 </div>

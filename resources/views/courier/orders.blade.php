@@ -14,6 +14,12 @@
                     'label' => 'ID'
                 ],
                 [
+                    'id' => 'priority',
+                    'label' => 'Priority',
+                    'type' => 'select',
+                    'options' => \App\Models\Order::PRIORITIES
+                ],
+                [
                     'id' => 'restaurant',
                     'label' => 'Restaurant',
                     'type' => 'select',
@@ -25,6 +31,11 @@
                     'type' => 'select',
                     'options' => $statuses
                 ],
+                [
+                    'id' => 'created_at',
+                    'label' => 'Created at',
+                    'type' => 'datepicker'
+                ]
             ]
         ]
     ])
@@ -32,6 +43,7 @@
     @include('components.datatable', [
         'thead' => [
             'id' => 'ID',
+            'priority' => 'Priority',
             'restaurant_name' => 'Restaurant',
             'status' => 'Status',
             'full_address' => 'Address',
@@ -49,6 +61,26 @@
             'dismiss' => [
                 'route_name' => 'courier.order.reject',
                 'route_idparam' => 'orderId'
+            ],
+            'custom' => [
+                [
+                    'route_name' => 'courier.order.priority',
+                    'route_idparam' => 'orderId',
+                    'route_params' => [
+                        'priority' => \App\Models\Order::PRIORITY_HIGHER
+                    ],
+                    'icon' => 'fas fa-arrow-up',
+                    'class' => 'btn btn-sm btn-secondary',
+                ],
+                [
+                    'route_name' => 'courier.order.priority',
+                    'route_idparam' => 'orderId',
+                    'route_params' => [
+                        'priority' => \App\Models\Order::PRIORITY_LOWER
+                    ],
+                    'icon' => 'fas fa-arrow-down',
+                    'class' => 'btn btn-sm btn-secondary',
+                ],
             ]
         ]
     ])
